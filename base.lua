@@ -1,4 +1,6 @@
-
+Tick=false
+TickTime=0
+TPS=0
 function Initialize(Plugin)
 	Plugin:SetName("Tosting")
 	Plugin:SetVersion(1)
@@ -443,6 +445,10 @@ end
 
 function MyOnTick(TimeDelta)
 --https://api.cuberite.org/OnTick.html
+TickTime=TimeDelta
+Tick = true
+Tick=false
+TPS=(1/TimeDelta)*1000
 
 end
 
@@ -473,5 +479,18 @@ end
 
 function MyOnWorldTick(World, TimeDelta)
 --https://api.cuberite.org/OnWorldTick.html
+
+end
+
+
+function Timer_ticks(timing)
+local time=0
+
+if Tick then
+time=time+1
+end
+if time>=timing then
+   return true
+end
 
 end
