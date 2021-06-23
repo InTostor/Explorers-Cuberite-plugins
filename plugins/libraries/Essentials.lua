@@ -1,16 +1,35 @@
 local Essentials = {}
 
-function Essentials.Timer_ticks(timing)
+
+function Essentials.Timer(tick,timing,mode)
     local time=0
-    
-    if Tick then
-    time=time+1
+    if mode == "TICKS" then
+    timing = timing
+    elseif type(mode) == "number" then
+    timing = timing*mode
+    else
+    return nil
     end
 
-    if time>=timing then
-       return true
+    while time<=timing do
+        if tick then
+        time = time + 1
+        end
     end
+    return true
+end
+
+function Essentials.Tps(TimeDelta)
+    local tps
     
+    tps=1/(TimeDelta)*1000
+    return tps
+end
+
+function Essentials.SysInfo()
+    local cRoot = cRoot:Get()
+    
+    return Essentials.Tps(), cRoot:GetPhysicalRAMUsage(), cRoot:GetVirtualRAMUsage(), cRoot:GetServerUpTime()
 end
 
 function Essentials.PluginInit() --Adding all hooks from Cuberite API
@@ -87,3 +106,5 @@ function Essentials.PluginInit() --Adding all hooks from Cuberite API
  end
 
     return Essentials
+
+
