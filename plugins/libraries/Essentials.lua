@@ -1,7 +1,8 @@
-local Essentials = {}
+--local Essentials = {}
 
+module("Essentials")
 
-function Essentials.Timer(tick,timing,mode)
+function Timer(tick,timing,mode)
     local time=0
     if mode == "TICKS" then
     timing = timing
@@ -19,20 +20,37 @@ function Essentials.Timer(tick,timing,mode)
     return true
 end
 
-function Essentials.Tps(TimeDelta)
+function Tps(TimeDelta)
     local tps
     
     tps=1/(TimeDelta)*1000
     return tps
 end
 
-function Essentials.SysInfo()
+function SysInfo()
     local cRoot = cRoot:Get()
     
-    return Essentials.Tps(), cRoot:GetPhysicalRAMUsage(), cRoot:GetVirtualRAMUsage(), cRoot:GetServerUpTime()
+    return Tps(), cRoot:GetPhysicalRAMUsage(), cRoot:GetVirtualRAMUsage(), cRoot:GetServerUpTime()
 end
 
-function Essentials.PluginInit() --Adding all hooks from Cuberite API
+function Math_distance2d(x1,z1,x2,z2)
+    x1 = math.abs(x1)
+    x2 = math.abs(x2)
+    z1 = math.abs(z1)
+    z2 = math.abs(z2)
+    local len2d = math.sqrt( (x1-x2)^2+(z1-z2)^2 )
+    return len2d
+end
+
+function Math_distance3d(x1,y1,z1,x2,y2,z2)
+    
+    local len2d = math.sqrt( (x1-x2)^2+(z1-z2)^2 )
+    local len3d = math.sqrt( len2d^2+(y1-y2)^2 )
+    return len2d
+end
+
+
+function PluginInit() --Adding all hooks from Cuberite API
     cPluginManager:AddHook(cPluginManager.HOOK_BLOCK_SPREAD, MyOnBlockSpread);
     cPluginManager:AddHook(cPluginManager.HOOK_BLOCK_TO_PICKUPS, MyOnBlockToPickups);
     cPluginManager:AddHook(cPluginManager.HOOK_BREWING_COMPLETED, MyOnBrewingCompleted);
@@ -106,5 +124,4 @@ function Essentials.PluginInit() --Adding all hooks from Cuberite API
  end
 
     return Essentials
-
 
